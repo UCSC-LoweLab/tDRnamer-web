@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-137438923-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-137438923-1');
+</script>
+
+		<meta charset="utf-8">
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+		<title>tDRnamer</title>
+		<meta name="description" content="tDRnamer: tRNA-derived small RNA Classifier">
+		<meta name="author" content="Andrew D. Holmes, Patricia P. Chan, and Todd M. Lowe">
+
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		<link rel="stylesheet" href="style/normalize.css">
+		<link rel="stylesheet" href="style/foundation.css">
+		<link rel="stylesheet" href="style/tdrnamer.css">
+		<link rel="stylesheet" id="font-awesome-css" href="style/font-awesome-4.3.0/css/font-awesome.min.css">
+		<script src="js/vendor/modernizr.js"></script>
+		<script src="js/vendor/jquery.js"></script>
+		<script src="js/tDRnamer.js"></script>
+  	</head>
+
+	<body>
+
+<!--small off canvas menu-->
+<div class="off-canvas-wrap" data-offcanvas>
+	<div class="inner-wrap">
+
+<!--top menu-->
+<nav class="tab-bar show-for-small">
+	<a class="left-off-canvas-toggle menu-icon ">
+		<span>Home</span>
+	</a>  
+</nav>
+
+<nav class="top-bar hide-for-small" data-topbar>
+	<ul class="title-area">
+		<li class="name">
+			<h1><a href="index.html">Home</a></h1>
+		</li>
+	</ul>
+
+	<section class="top-bar-section">
+		<ul class="right">
+			<li class="divider"></li>
+			<li>
+				<a href="docs/" target=_blank>User Guide</a>
+			</li
+			<li class="divider"></li>
+			<li class="has-dropdown">
+				<a href="other-links.html" class="">Links</a>
+				<ul class="dropdown">
+					<li><a href="http://gtrnadb.ucsc.edu/" target=_blank>GtRNAdb</a></li>
+					<li><a href="http://trna.ucsc.edu/tRNAscan-SE/" target=_blank>tRNAscan-SE</a></li>
+					<li><a href="http://trna.ucsc.edu/tRNAviz/" target=_blank>tRNAviz</a></li>
+				</ul>
+			</li>
+			<li class="divider"></li>
+			<li class="has-dropdown">
+				<a href="contact.html" class="">About</a>
+				<ul class="dropdown">
+<!--					<li><a href="citation.html">Citation</a></li>-->
+					<li><a href="contact.html">Contact Us</a></li>
+				</ul>
+			</li>
+		</ul>
+	</section>
+</nav>
+
+<aside class="left-off-canvas-menu">
+
+<ul class="off-canvas-list">
+	<li><label class="first">tDRnamer</label></li>
+	<li><a href="index.html">Home</a></li>
+</ul>
+
+<hr>
+
+<ul class="off-canvas-list">
+    <li><label>Help</label></li>
+    <li><a href="docs/" target=_blank>User Guide</a></li>
+</ul>
+
+<hr>
+
+<ul class="off-canvas-list">
+    <li><label>Links</label></li>
+    <li><a href="http://gtrnadb.ucsc.edu/" target=_blank>GtRNAdb</a></li>
+    <li><a href="http://trna.ucsc.edu/tRNAscan-SE/" target=_blank>tRNAscan-SE</a></li>
+    <li><a href="http://trna.ucsc.edu/tRNAviz/" target=_blank>tRNAviz</a></li>
+</ul>
+
+<hr>
+
+<ul class="off-canvas-list">
+    <li><label>About</label></li>
+<!--	<li><a href="citation.html">Citation</a></li>-->
+    <li><a href="contact.html">Contact Us</a></li>
+    <li><a href="http://lowelab.ucsc.edu" target=_blank>Lowe Lab</a></li>
+</ul>
+
+</aside>
+
+
+<!--content-->
+<!--title-->
+<header id="page-header">	  
+	<div class="small-18 medium-8 large-7 columns">
+		<img src="image/tDRnamer_with_name.png"/>
+	</div>
+</header>
+
+<div class="scroll-top-wrapper ">
+	<span class="scroll-top-inner">
+		<i class="fa fa-2x fa-arrow-up"></i>
+	</span>
+</div>
+
+<section id="genome-section">	
+	<div class="row">
+		<div class="small-16 medium-8 large-8 columns">
+<BR>
+<h5>This web server utilizes tDRnamer 1.0</h5>
+<p>The following example files are provided to demonstrate the function of tDRnamer.
+For more information regarding the usage and the tDR naming system, please review the
+<a href="docs/" target=_blank>User Guide</a>.</p>
+<p><a href="data/examples/ExampleSequences.fa" target=_blank>Example tRNA-derived small RNA (tDR) sequences</a></br>
+<a href="data/examples/ExampleNames.txt" target=_blank>Example tRNA-derived small RNA (tDR) names</a></p>
+
+<h5>Standalone version</h5>
+<p>For large dataset or annotating tRNA-derived RNAs directly with small RNA-seq data, please check out the downloadable version of 
+tDRnamer at our <a href="https://github.com/UCSC-LoweLab/tDRnamer" target=_blank>GitHub repository</a> and the
+<a href="docs/standalone/" target=_blank>User Guide</a> for details.</p>
+<br/>
+		</div>
+
+		<div class="small-24 medium-12 large-12 columns">
+	
+<ul class="tabs" data-tab id="option-tabs">
+  <li class="tab-title active "><a href="#panelSeq" aria-selected="true">Search by Sequence</a></li>
+  <li class="tab-title"><a href="#panelName">Search by tDR Name</a></li>
+</ul>
+
+<div class="tabs-content">
+  <div class="content active" id="panelSeq">
+
+<form id="form_find_tdr" onsubmit="return checkInput(this)" action="/cgi-bin/tDRnamer.cgi"
+ method="post" enctype="multipart/form-data" name="tDRform">
+
+<table cellspacing=0 cellpadding=3 border=0>
+<tr>
+<td valign="top" width=200>Sequence source</td>
+<td valign="top">
+<SELECT name="organism" size=1 style="width: 40%" onchange=select_org(value)>
+<optgroup label="Eukaryota">
+	<OPTION value="araTha1">Arabidopsis thaliana (TAIR10)</OPTION>
+	<OPTION value="ce11">Caenorhabditis elegans (WBcel235/ce11)</OPTION>
+	<OPTION value="dm6">Drosophila melanogaster (Release 6 plus ISO1 MT/dm6)</OPTION>
+	<OPTION value="hg19">Homo sapiens (GRCh37/hg19)</OPTION>
+	<OPTION value="hg38" selected>Homo sapiens (GRCh38/hg38)</OPTION>
+	<OPTION value="mm10">Mus musculus (GRCm38/mm10)</OPTION>
+	<OPTION value="mm39">Mus musculus (GRCm39/mm39)</OPTION>
+	<OPTION value="rn6">Rattus norvegicus (Rnor_6.0/rn6)</OPTION>
+	<OPTION value="rn7">Rattus norvegicus (mRatBN7.2/rn7)</OPTION>
+	<OPTION value="sacCer3">Saccharomyces cerevisiae S288c</OPTION>
+	<OPTION value="schiPomb_972H">Schizosaccharomyces pombe 972h-</OPTION>
+</optgroup>
+<optgroup label="Bacteria">
+	<OPTION value="baciSubt2">Bacillus subtilis 168</OPTION>
+	<OPTION value="eschColi_K_12_MG1655">Escherichia coli K-12 MG1655</OPTION>
+	<OPTION value="heliPylo_J99">Helicobacter pylori J99</OPTION>
+	<OPTION value="mycoTube_H37RV">Mycobacterium tuberculosis H37Rv</OPTION>
+</optgroup>
+<optgroup label="Archaea">
+	<OPTION value="haloVolc1">Haloferax volcanii DS2</OPTION>
+	<OPTION value="methBark1">Methanosarcina barkeri str Fusaro</OPTION>
+	<OPTION value="metMar1">Methanococcus maripaludis S2</OPTION>
+	<OPTION value="therKoda1">Thermococcus kodakarensis KOD1</OPTION>
+</optgroup>
+</SELECT>
+</td>
+</tr>
+<tr>
+<td valign="top" width=200 rowspan=2>Query sequence</td>
+<td valign="top">
+<input checked="checked" value="formatted" name="qformat" type="radio" id="qformat_formatted"><label for="qformat_formatted">Formatted (FASTA)</label>
+<input value="raw" name="qformat" type="radio" id="qformat_unformatted"><label for="qformat_unformatted">Raw Sequence</label>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<div class="medium-3 columns">
+	Sequence name (optional): 
+</div>
+<div class="medium-7 columns">
+	<input size="20" name="seqname" type="text" id="seqname">
+</div>
+<div class="medium-2 columns">
+	(no spaces)
+</div>
+<textarea name="qseq" rows=15 cols=80></textarea>
+or submit a file:<BR><BR>
+<input type="file" name="seqfile" />
+<BR>
+<!--<div class="medium-9 large-10 columns">
+</div>
+<div class="medium-3 large-2 columns">-->
+<input onClick="document.tDRform.qseq.value = ''; document.tDRform.seqfile.value = ''" value="Clear Sequence" type="button" /><BR><BR>
+Queries are limited to a total of 1000 sequences at any one time.<br>
+This web server is designed to analyze sub-tRNA sized RNAs with the length between 15nt and 70nt. To analyze tDRs that are outside this range, please check out the downloadable version of tDRnamer.<BR><BR>
+<!--</div>-->
+</td>
+</tr>
+
+<tr>
+<td valign="top" width=200>Output</td>
+<td valign="top">
+Optional: Enter email address to get a message with a link to results when completed (for larger queries)<BR><BR>
+<div class="medium-3 columns">
+	Email address: 
+</div>
+<div class="medium-5 columns">
+	<input size="40" name="address" type="email" id="address">
+</div>
+<div class="medium-4 columns">
+</div>
+</td>
+</tr>
+</table>
+<input name="searchType" type="hidden" id="searchType" value="sequence" />
+<button type="submit">Run tDRnamer</button>
+<input class="button" value="Reset Form" type="reset">
+
+</table>
+</form>
+</div>
+
+<div class="content" id="panelName">
+
+<form id="form_find_tdrname" onsubmit="return checkInput(this)" action="/cgi-bin/tDRnamer.cgi"
+ method="post" enctype="multipart/form-data" name="tDRnameform">
+
+<table cellspacing=0 cellpadding=3 border=0 style='width:90%'>
+<tr>
+<td valign="top" width=200>Sequence source</td>
+<td valign="top">
+<SELECT name="organism" size=1 style="width: 40%" onchange=select_org(value)>
+<optgroup label="Eukaryota">
+	<OPTION value="araTha1">Arabidopsis thaliana (TAIR10)</OPTION>
+	<OPTION value="ce11">Caenorhabditis elegans (WBcel235/ce11)</OPTION>
+	<OPTION value="dm6">Drosophila melanogaster (Release 6 plus ISO1 MT/dm6)</OPTION>
+	<OPTION value="hg19">Homo sapiens (GRCh37/hg19)</OPTION>
+	<OPTION value="hg38" selected>Homo sapiens (GRCh38/hg38)</OPTION>
+	<OPTION value="mm10">Mus musculus (GRCm38/mm10)</OPTION>
+	<OPTION value="mm39">Mus musculus (GRCm39/mm39)</OPTION>
+	<OPTION value="rn6">Rattus norvegicus (Rnor_6.0/rn6)</OPTION>
+	<OPTION value="rn7">Rattus norvegicus (mRatBN7.2/rn7)</OPTION>
+	<OPTION value="sacCer3">Saccharomyces cerevisiae S288c</OPTION>
+	<OPTION value="schiPomb_972H">Schizosaccharomyces pombe 972h-</OPTION>
+</optgroup>
+<optgroup label="Bacteria">
+	<OPTION value="baciSubt2">Bacillus subtilis 168</OPTION>
+	<OPTION value="eschColi_K_12_MG1655">Escherichia coli K-12 MG1655</OPTION>
+	<OPTION value="heliPylo_J99">Helicobacter pylori J99</OPTION>
+	<OPTION value="mycoTube_H37RV">Mycobacterium tuberculosis H37Rv</OPTION>
+</optgroup>
+<optgroup label="Archaea">
+	<OPTION value="haloVolc1">Haloferax volcanii DS2</OPTION>
+	<OPTION value="methBark1">Methanosarcina barkeri str Fusaro</OPTION>
+	<OPTION value="metMar1">Methanococcus maripaludis S2</OPTION>
+	<OPTION value="therKoda1">Thermococcus kodakarensis KOD1</OPTION>
+</optgroup>
+</SELECT>
+</td>
+</tr>
+<tr>
+<td valign="top" width=200>Query tDR Name</td>
+<td valign="top">
+<textarea name="qname" rows=15 cols=80 style='width:40%'></textarea>
+(Queries are limited to a total of 500 tDR names at any one time)<BR><BR>
+or submit a file:<BR><BR>
+<input type="file" name="namefile" />
+<!--<div class="medium-9 large-10 columns">
+</div>
+<div class="medium-3 large-2 columns">-->
+<input onClick="document.tDRnameform.qname.value = ''; document.tDRnameform.namefile.value = ''" value="Clear tDR Names" type="button" /><BR>
+<!--</div>-->
+</td>
+</tr>
+
+<tr>
+<td valign="top" width=200>Output</td>
+<td valign="top">
+Optional: Enter email address to get a message with a link to results when completed (for larger queries)<BR><BR>
+<div class="medium-3 columns">
+	Email address: 
+</div>
+<div class="medium-5 columns">
+	<input size="40" name="address" type="email" id="address">
+</div>
+<div class="medium-4 columns">
+</div>
+</td>
+</tr>
+</table>
+<input name="searchType" type="hidden" id="searchType" value="name" />
+<button type="submit">Run tDRnamer</button>
+<input class="button" value="Reset Form" type="reset">
+
+</table>
+</form>
+</div>
+</div>
+		</div>
+	</div>
+</section>
+	
+<section id="footer">
+	<div class="row">
+		<div class="small-11 columns">
+			<p><a href="http://lowelab.ucsc.edu" target=_blank>The Lowe Lab</a>, Biomolecular Engineering, University of California Santa Cruz</p>
+		</div>
+		<div class="small-1 columns">
+			<a href="https://github.com/UCSC-LoweLab" target=_blank><i class="fa fa-github" aria-hidden="true"></i></a>
+			<a href="https://hub.docker.com/r/ucsclowelab/tdrnamer" target=_blank><i class="fa fa-docker" aria-hidden="true"></i></a>
+			<a href="https://twitter.com/UCSCtRNA" target=_blank><i class="fa fa-twitter" aria-hidden="true"></i></a>
+		</div>
+	</div>
+</section>
+
+		<a class="exit-off-canvas"></a>
+	</div>      
+</div>
+		<script src="js/backToTop.js"></script>
+	  	<script src="js/foundation.min.js"></script>
+	  	<script type="text/javascript">
+	    $(document).foundation();
+	  	</script>
+	</body>
+</html>

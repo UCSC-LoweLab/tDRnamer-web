@@ -1,0 +1,94 @@
+			<div class="panel">
+				<table id="tDRlist" class="display" width="99.9%">
+					<thead>
+						<tr>						
+							<th>tDR Name</th>
+							<th>Sequence</th>
+							<th>Synonyms</th>
+							<th>Length</th>
+							<th>Isotype</th>
+							<th>Anticodon</th>
+							<th>Sprinzl Position</th>
+							<th>Source Type</th>
+							<th>Grouped with similar tDRs</th>
+							<th>Input Order</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+	</section>
+	</div>  
+	<a class="exit-off-canvas"></a>
+    </div>
+	</div>      
+</div>
+</section>
+	
+<section id="footer">
+	<div class="row">
+		<div class="small-12 columns">
+			<p><a href="http://lowelab.ucsc.edu" target=_blank>The Lowe Lab</a>, Biomolecular Engineering, University of California Santa Cruz</p>
+		</div>
+	</div>
+</section>
+
+	</div>      
+</div>
+		
+		<script src="../tDRnamer/js/backToTop.js"></script>
+	  	<script src="../tDRnamer/js/foundation.min.js"></script>
+	  	<script type="text/javascript">
+	    $(document).foundation({
+			offcanvas : {
+				open_method: 'overlap', 
+		    // Should the menu close when a menu link is clicked?
+		    // [ true | false ]
+				close_on_click : false
+			}
+		});
+		
+		$(document).ready(function() {
+			$('#tDRlist').dataTable({
+				"ajax": "$json_link.json",
+				"pageLength": 100,
+				"lengthMenu": [ [25, 50, 100, 200, -1], [25, 50, 100, 200, "All"] ],
+				"paging": true,
+				"scrollX": true,
+				"order": [ [9, 'asc'] ],
+				"columnDefs": [
+					{ className: "word-break", "targets": [ 0 ] },
+					{ width: "30%", className: "word-break", "targets": [ 1 ] },
+					{ className: "word-break", "targets": [ 2 ] },
+					{ width: "5%", className: "dt-center", "targets": [ 3 ] },
+					{ width: "5%", className: "dt-center", "targets": [ 4 ] },
+					{ width: "5%", className: "dt-center", "targets": [ 5 ] },
+					{ width: "5%", className: "dt-center", "targets": [ 6 ] },
+					{ width: "4%", className: "dt-center", "targets": [ 7 ] },
+					{ width: "4%", className: "dt-center", "targets": [ 8 ] },
+					{ visible: false, "targets": [ 9 ] }
+
+				],
+				"columns" : [
+					{"data": "tDR_ID",
+						"fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+							if (oData.length != "") {
+								$(nTd).html("<a href='/cgi-bin/tDRdetails.cgi?run=$run&id="+oData.tDR_ID+"&org=$org' target=_blank>"+oData.tDR_ID+"</a>");
+							}
+						}
+					},
+					{"data": "sequence"},
+					{"data": "synonyms"},
+					{"data": "length"},
+					{"data": "isotype"},
+					{"data": "anticodon"},
+					{"data": "positions"},
+					{"data": "source_type"},
+					{"data": "other_tDRs_in_group"},
+					{"data": "order_id"}
+				]
+		});
+		} );
+	  	</script>
+		<script src="../tDRnamer/js/sideMenu.js"></script>
+	</body>
+</html>
