@@ -26,7 +26,7 @@ if ($child = fork) {
     while (1) {
 
 	sleep(3);
-	print "<!-- Are you there? -->\n";
+#	print "<!-- Are you there? -->\n";
 
     }
 
@@ -214,9 +214,9 @@ sub CheckOutput
 	
 	if ($SEARCHTYPE eq "sequence")
 	{
-		if (-r "$SeqFile-frags.txt" and -r "$SeqFile-tDR-groups.txt" and -r "$SeqFile-tDR-summary.json" and -r "$SeqFile-tDR-info.txt")
+		if (-r "$SeqFile-tDR-list.txt" and -r "$SeqFile-tDR-groups.txt" and -r "$SeqFile-tDR-summary.json" and -r "$SeqFile-tDR-info.txt")
 		{
-			my ($line_count, $dummy) = split(/\s+/, `wc -l $SeqFile-frags.txt`);
+			my ($line_count, $dummy) = split(/\s+/, `wc -l $SeqFile-tDR-list.txt`);
 			if ($line_count <= 1)
 			{
 				$valid = 0;
@@ -450,7 +450,7 @@ sub Wait_Turn {
 	else { last; }
 
 	if ($METHOD ne 'mail') { 
-	    print "<!-- Are you there? -->\n"; 
+#	    print "<!-- Are you there? -->\n"; 
 	}
 
 

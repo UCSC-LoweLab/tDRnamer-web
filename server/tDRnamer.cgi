@@ -59,8 +59,10 @@ elsif (defined $child) {
 
 	$Max_query_len = $configurations->{"max_query_len"};
 	$Max_query_seq = $configurations->{"max_query_seq"};
+	$Max_query_seq_max_mode = $configurations->{"max_query_seq_max_mode"};
 	$Max_seq_display = $configurations->{"max_seq_display"};
 	$Max_query_name = $configurations->{"max_query_name"};
+	$Max_query_name_max_mode = $configurations->{"max_query_name_max_mode"};
 	$Max_name_display = $configurations->{"max_name_display"};
 
     $SIG{'TERM'} = 'exit_signal';
@@ -110,6 +112,7 @@ elsif (defined $child) {
     &ReadParse;
 	
 	$SEARCHTYPE = $in{'searchType'};
+	$SEARCHMODE = $in{'mode'};
     $FORMAT = $in{'qformat'};
     $ORG = $in{'organism'};
     $SEQ = $in{'qseq'};
@@ -190,7 +193,7 @@ elsif (defined $child) {
 		system("mkdir -p ".$DOWNLOAD_TEMP_RUN);
 	
 		#Save Query Sequence in temporary file.
-		$SeqFile = $DOWNLOAD_TEMP_RUN."/seq$PID";
+		$SeqFile = $DOWNLOAD_TEMP_RUN."/seq$PID".".fa";
 	
 		if (!open(SEQFILE, ">$SeqFile"))
 		{
@@ -253,7 +256,12 @@ elsif (defined $child) {
 				$query_length = $value;
 			}
 			
-			if ($i == 0 and $value > $Max_query_seq)
+			if ($i == 0 and $SEARCHMODE eq "Max" and $value > $Max_query_seq_max_mode)
+			{
+				$ERROR = "<BR>The total number of sequences is over the maximum to be queried by our web server.<BR>".
+					"Please limit the number of sequences to a maximum of ".$Max_query_seq_max_mode." when using maximum sensutuvuty search mode or consider using the command-line version of tDRnamer.<BR>";
+			}
+			elsif ($i == 0 and $SEARCHMODE ne "Max" and $value > $Max_query_seq)
 			{
 				$ERROR = "<BR>The total number of sequences is over the maximum to be queried by our web server.<BR>".
 					"Please limit the number of sequences to a maximum of ".$Max_query_seq." or consider using the command-line version of tDRnamer.<BR>";
@@ -315,7 +323,7 @@ elsif (defined $child) {
 		system("mkdir -p ".$DOWNLOAD_TEMP_RUN);
 	
 		#Save Query names in temporary file.
-		$NameFile = $DOWNLOAD_TEMP_RUN."/seq$PID";
+		$NameFile = $DOWNLOAD_TEMP_RUN."/seq$PID".".txt";
 	
 		if (!open(TDRNAMEFILE, ">$NameFile"))
 		{
@@ -354,7 +362,12 @@ elsif (defined $child) {
 				$query_length = $value;
 			}
 			
-			if ($i == 0 and $value > $Max_query_name)
+			if ($i == 0 and $SEARCHMODE eq "Max" and $value > $Max_query_name_max_mode)
+			{
+				$ERROR = "<BR>The total number of tDR names is over the maximum to be queried by our web server.<BR>".
+					"Please limit the number of query names to a maximum of ".$Max_query_name_max_mode." with maximum sensitivity search mode or consider using the command-line version of tDRnamer.<BR>";
+			}
+			elsif ($i == 0 and $SEARCHMODE ne "Max" and $value > $Max_query_name)
 			{
 				$ERROR = "<BR>The total number of tDR names is over the maximum to be queried by our web server.<BR>".
 					"Please limit the number of query names to a maximum of ".$Max_query_name." or consider using the command-line version of tDRnamer.<BR>";
@@ -600,64 +613,57 @@ sub Run {
 
 sub SequenceSearch
 {
-	$Command = "$EXEC/tDRnamer/tDRnamer.bash ";
-	$Command = $Command." $SeqFile";
-	$Command = $Command." ".$LIB."/".$ORG."/".$ORG;
+	$Command = "$EXEC/tDRnamer/tDRnamer -s ";
+	$Command = $Command." ".$SeqFile;
+	$Command = $Command." -o ".$DOWNLOAD_TEMP_RUN."/seq".$PID;
+	$Command = $Command." -d ".$LIB."/".$ORG."/".$ORG;
 	if (lc($genome_info->{org_domain}) eq "eukaryota")
 	{
-		$Command = $Command." 0";
+		$Command = $Command." -r euk";
 	}
-	else
+	elsif (lc($genome_info->{org_domain}) eq "bacteria")
 	{
-		$Command = $Command." 1";
+		$Command = $Command." -r bact";
 	}
-	$Command = $Command." ".$EXEC;
+	elsif (lc($genome_info->{org_domain}) eq "archaea")
+	{
+		$Command = $Command." -r arch";
+	}
+	if ($SEARCHMODE eq "Max")
+	{
+		$Command = $Command." --max";
+	}
+	$Command = $Command." --skipcheck";
+	$Command = $Command." --bin ".$EXEC;
 	system($Command);
 }
 
 sub NameSearch
 {
-	$SeqFile = $NameFile;
-	$SeqFile_reformat = $NameFile."_reformat.fa";
-	$Command = "$EXEC/tDRnamer/find_tdr --names ".$NameFile." --db ".$LIB."/".$ORG."/".$ORG." --fasta ".$SeqFile.".fa --genomes ".$genome_file." > ".$NameFile."-find-tdrs.log";   
+	$Command = "$EXEC/tDRnamer/tDRnamer -m name -n ";
+	$Command = $Command." ".$NameFile;
+	$Command = $Command." -o ".$DOWNLOAD_TEMP_RUN."/seq".$PID;
+	$Command = $Command." -d ".$LIB."/".$ORG."/".$ORG;
+	$Command = $Command." --genomes ".$genome_file;	
+	if (lc($genome_info->{org_domain}) eq "eukaryota")
+	{
+		$Command = $Command." -r euk";
+	}
+	elsif (lc($genome_info->{org_domain}) eq "bacteria")
+	{
+		$Command = $Command." -r bact";
+	}
+	elsif (lc($genome_info->{org_domain}) eq "archaea")
+	{
+		$Command = $Command." -r arch";
+	}
+	if ($SEARCHMODE eq "Max")
+	{
+		$Command = $Command." --max";
+	}
+	$Command = $Command." --skipcheck";
+	$Command = $Command." --bin ".$EXEC;
 	system($Command);
-	if (-e "$SeqFile.fa" and -s "$SeqFile.fa")
-	{
-		$Command = $EXEC."/reformat -d -u fasta ".$SeqFile.".fa > ".$SeqFile_reformat;
-		system($Command);
-		if (-e "$SeqFile_reformat" and -s "$SeqFile_reformat")
-		{
-			$Command = "$EXEC/tDRnamer/tDRsearch.bash ";
-			$Command = $Command." ".$SeqFile_reformat." ".$NameFile;
-			$Command = $Command." ".$LIB."/".$ORG."/".$ORG;
-			if (lc($genome_info->{org_domain}) eq "eukaryota")
-			{
-				$Command = $Command." 0";
-			}
-			else
-			{
-				$Command = $Command." 1";
-			}
-			$Command = $Command." ".$EXEC;
-			system($Command);
-		}
-	}
-	else
-	{
-		$Command = "$EXEC/tDRnamer/tDRsearch.bash ";
-		$Command = $Command." ".$SeqFile.".fa ".$NameFile;
-		$Command = $Command." ".$LIB."/".$ORG."/".$ORG;
-		if (lc($genome_info->{org_domain}) eq "eukaryota")
-		{
-			$Command = $Command." 0";
-		}
-		else
-		{
-			$Command = $Command." 1";
-		}
-		$Command = $Command." ".$EXEC;
-		system($Command);
-	}
 }
 
 sub Start_HTML_Page {
@@ -665,31 +671,32 @@ sub Start_HTML_Page {
     &HTMLHead("tDRnamer Results", $google_analytics);
 }
 
-
 sub CheckOutput
 {
 	my $valid = 1;
 	
+	my $output_prefix = $DOWNLOAD_TEMP_RUN."/seq".$PID;
+
 	if ($SEARCHTYPE eq "sequence")
 	{
-		if (-r "$SeqFile-frags.txt" and -r "$SeqFile-tDR-groups.txt" and -r "$SeqFile-tDR-summary.json" and -r "$SeqFile-tDR-info.txt")
+		if (-r $output_prefix."-tDR-list.txt" and -r $output_prefix."-tDR-groups.txt" and -r $output_prefix."-tDR-summary.json" and -r $output_prefix."-tDR-info.txt")
 		{
-			my ($line_count, $dummy) = split(/\s+/, `wc -l $SeqFile-frags.txt`);
+			my ($line_count, $dummy) = split(/\s+/, `wc -l $output_prefix-tDR-list.txt`);
 			if ($line_count <= 1)
 			{
 				$valid = 0;
 			}
-			($line_count, $dummy) = split(/\s+/, `wc -l $SeqFile-tDR-groups.txt`);
+			($line_count, $dummy) = split(/\s+/, `wc -l $output_prefix-tDR-groups.txt`);
 			if ($line_count < 1)
 			{
 				$valid = 0;
 			}
-			($line_count, $dummy) = split(/\s+/, `wc -l $SeqFile-tDR-summary.json`);
+			($line_count, $dummy) = split(/\s+/, `wc -l $output_prefix-tDR-summary.json`);
 			if ($line_count <= 5)
 			{
 				$valid = 0;
 			}
-			($line_count, $dummy) = split(/\s+/, `wc -l $SeqFile-tDR-info.txt`);
+			($line_count, $dummy) = split(/\s+/, `wc -l $output_prefix-tDR-info.txt`);
 			if ($line_count <= 1)
 			{
 				$valid = 0;
@@ -702,9 +709,9 @@ sub CheckOutput
 	}
 	else
 	{
-		if (-r "$SeqFile-name-tDR-summary.json")
+		if (-r $output_prefix."-name-tDR-summary.json")
 		{
-			my ($line_count, $dummy) = split(/\s+/, `wc -l $SeqFile-name-tDR-summary.json`);
+			my ($line_count, $dummy) = split(/\s+/, `wc -l $output_prefix-name-tDR-summary.json`);
 			if ($line_count <= 5)
 			{
 				$valid = 0;
@@ -737,14 +744,16 @@ END_of_HTML
 
 	if (!$valid)
 	{
+#		print "<p>$Command</p>\n";
 		print "<BR><B>No tRNA-derived RNAs found</B><BR><BR>\n\n";
 		&HTMLFoot;
 		return;
 	}
 
+	my $output_prefix = $DOWNLOAD_TEMP_RUN."/seq".$PID;
 	my $file_prefix = "seq".$PID;
 	
-	my ($line_count, $dummy) = split(/\s+/, `wc -l $SeqFile-tDR-info.txt`);
+	my ($line_count, $dummy) = split(/\s+/, `wc -l $output_prefix-tDR-info.txt`);
 	if ($line_count > 1)
 	{		
 		print "<div class=\"row\">\n";

@@ -25,7 +25,7 @@ if ($child = fork) {
     while (1) {
 
 	sleep(3);
-	print "<!-- Are you there? -->\n";
+#	print "<!-- Are you there? -->\n";
 
     }
 
@@ -1244,7 +1244,7 @@ sub Wait_Turn {
 	else { last; }
 
 	if ($METHOD ne 'mail') { 
-	    print "<!-- Are you there? -->\n"; 
+#	    print "<!-- Are you there? -->\n"; 
 	}
 
 

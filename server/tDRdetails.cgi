@@ -26,7 +26,7 @@ if ($child = fork) {
     while (1) {
 
 	sleep(10);
-	print "<!-- Are you there? -->\n";
+#	print "<!-- Are you there? -->\n";
 
     }
 
@@ -248,10 +248,10 @@ sub Get_alignments
 		$seqs{$ID} = scalar(@source_trnas);
 		
 		my $line = "";
-		my $alignment_file = $DOWNLOAD_TEMP."/run".$RUN."/seq".$PREFIX."-frags.stk";
+		my $alignment_file = $DOWNLOAD_TEMP."/run".$RUN."/seq".$PREFIX."-tDRs.stk";
 		if ($tdr->[1] eq "pre-tRNA")
 		{
-			$alignment_file = $DOWNLOAD_TEMP."/run".$RUN."/seq".$PREFIX."-locifrags.stk";
+			$alignment_file = $DOWNLOAD_TEMP."/run".$RUN."/seq".$PREFIX."-pre-tDRs.stk";
 		}
 		
 		open(FILE_IN, "$alignment_file") or die "Fail to open $alignment_file\n";
@@ -1268,7 +1268,7 @@ sub Wait_Turn
 	else { last; }
 
 	if ($METHOD ne 'mail') { 
-	    print "<!-- Are you there? -->\n"; 
+#	    print "<!-- Are you there? -->\n"; 
 	}
 
 

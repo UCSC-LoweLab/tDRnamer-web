@@ -196,6 +196,15 @@ tDRnamer at our <a href="https://github.com/UCSC-LoweLab/tDRnamer" target=_blank
 </td>
 </tr>
 <tr>
+<td valign="top" width=200>Search mode</td>
+<td valign="top">
+<SELECT name="mode" size=1  style="width: 30%">
+<OPTION value=Default selected>Default</OPTION>
+<OPTION value=Max>Maximum sensitivity (very slow)</OPTION>
+</SELECT>
+</td>
+</tr>
+<tr>
 <td valign="top" width=200 rowspan=2>Query sequence</td>
 <td valign="top">
 <input checked="checked" value="formatted" name="qformat" type="radio" id="qformat_formatted"><label for="qformat_formatted">Formatted (FASTA)</label>
@@ -221,7 +230,7 @@ or submit a file:<BR><BR>
 </div>
 <div class="medium-3 large-2 columns">-->
 <input onClick="document.tDRform.qseq.value = ''; document.tDRform.seqfile.value = ''" value="Clear Sequence" type="button" /><BR><BR>
-Queries are limited to a total of 1000 sequences at any one time.<br>
+Queries are limited to a total of 1000 sequences with default search mode and 100 sequences with maximum sensitivity search mode at any one time.<br>
 This web server is designed to analyze sub-tRNA sized RNAs with the length between 15nt and 70nt. To analyze tDRs that are outside this range, please check out the downloadable version of tDRnamer.<BR><BR>
 <!--</div>-->
 </td>
@@ -289,10 +298,18 @@ Optional: Enter email address to get a message with a link to results when compl
 </td>
 </tr>
 <tr>
+<td valign="top" width=200>Search mode</td>
+<td valign="top">
+<SELECT name="mode" size=1  style="width: 30%">
+<OPTION value=Default selected>Default</OPTION>
+<OPTION value=Max>Maximum sensitivity (very slow)</OPTION>
+</SELECT>
+</td>
+<tr>
 <td valign="top" width=200>Query tDR Name</td>
 <td valign="top">
 <textarea name="qname" rows=15 cols=80 style='width:40%'></textarea>
-(Queries are limited to a total of 500 tDR names at any one time)<BR><BR>
+(Queries are limited to a total of 500 tDR names with default search mode and 50 tDR names with maximum sensitivity search mode at any one time)<BR><BR>
 or submit a file:<BR><BR>
 <input type="file" name="namefile" />
 <!--<div class="medium-9 large-10 columns">
