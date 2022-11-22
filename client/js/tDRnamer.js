@@ -3,7 +3,7 @@
 function checkInput(form)
 {
 	// regular expression to match only alphanumeric characters, hyphen, underscore, and colon
-	var reText = /^[\w\-\_\:]+$/;
+	var reText = /^[\w\-\_\:\|]+$/;
 	
 	// regular expression to match only sequences in FASTA format
 	var reFasta = /[\<\#\$\!\@\%\?]+/;
@@ -16,7 +16,7 @@ function checkInput(form)
 
 	if(form.seqname.value != "" && !reText.test(form.seqname.value))
 	{
-		alert("Error: Sequence name can only contain alphanumeric and the following special characters "+'\n'+"- _ :");
+		alert("Error: Sequence name can only contain alphanumeric and the following special characters "+'\n'+"- _ :|");
 		form.seqname.focus();
 		return false;
 	}

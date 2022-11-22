@@ -132,6 +132,7 @@ elsif (defined $child) {
 	$genome_info = &Get_genome_info($genome_file, $ORG);
 	
 	my $tdr = &Get_tDR;
+	&Get_full_name($tdr);
 	my $alignments = &Get_alignments($tdr);
 	if ($tdr->[1] eq "pre-tRNA")
 	{
@@ -228,6 +229,33 @@ sub Get_tDR
 	close(FILE_IN);
 
 	return \@tdr;
+}
+
+sub Get_full_name
+{
+	my ($tdr) = @_;
+	my $full_name = $tdr->[2];
+	my $map_file = $DOWNLOAD_TEMP."/run".$RUN."/seq".$PREFIX."-tDR-fullname-map.txt";
+	if (-r $map_file)
+	{
+		my $found = 0;
+		my $line = "";
+		my @rec = ();
+		open(FILE_IN, "$map_file") or die "Fail to open $map_file\n";
+		while (($line = <FILE_IN>) and !$found)
+		{
+			chomp($line);
+			@rec = split(/\t/, $line);
+			if ($rec[0] eq $ID)
+			{
+				$found = 1;
+				$full_name = $rec[1];
+			}
+		}
+		close(FILE_IN);
+
+	}
+	push(@$tdr, $full_name);
 }
 
 sub Get_alignments
@@ -398,7 +426,7 @@ sub Create_MFE_structure
 {
 	my ($tdr) = @_;
 	my $current_dir = getcwd;
-	my $mod_tDR_name = $tdr->[2];
+	my $mod_tDR_name = $tdr->[0]."__".$tdr->[2];
 	$mod_tDR_name =~ s/\:/\_/;
 	$mod_tDR_name =~ s/\-/\_/g;
 	my $mfe = "";
@@ -472,7 +500,7 @@ sub Create_MFE_image
 sub Draw_tDR
 {
 	my ($alignments, $tdr) = @_;
-	my $mod_tDR_name = 	$tdr->[2];
+	my $mod_tDR_name = $tdr->[0]."__".$tdr->[2];
 	$mod_tDR_name =~ s/\:/\_/;
 	$mod_tDR_name =~ s/\-/\_/g;
 	my $png_file = $mod_tDR_name."-align.png";
@@ -495,7 +523,7 @@ sub Draw_tDR
 		my $seq = $alignments->[scalar(@$alignments)-2];
 		$seq = substr($seq, rindex($seq, " ")+1);
 		$seq =~ s/\./N/g;
-		my $diff_pos = &find_diff_pos($tdr->[2], $seq);
+		my $diff_pos = &find_diff_pos($tdr->[scalar(@$tdr)-1], $seq);
 
 		my $cmd = "";
 		my $ss_file = $mod_tDR_name."-align.ss";
@@ -858,7 +886,7 @@ sub PrintDetails
 	if (scalar(@$alignments) > 0)
 	{		
 		print "<pre><div class=\"seq_alignment\">";
-		&print_alignments($alignments, $tdr->[2]);
+		&print_alignments($alignments, $tdr->[scalar(@$tdr)-1]);
 		print "</div></pre></div>\n";
 	}
 	$html = qq {

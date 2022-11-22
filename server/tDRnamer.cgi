@@ -118,6 +118,7 @@ elsif (defined $child) {
     $SEQ = $in{'qseq'};
     $REMOTEFILE = $in{'seqfile'};
     $SEQNAME = $in{'seqname'};
+	$VARIATION = $in{'variation'};
 	$ADDRESS = $in{'address'};
 	$TDRNAME = $in{'qname'};
     $NAMEFILE = $in{'namefile'};
@@ -632,6 +633,10 @@ sub SequenceSearch
 	if ($SEARCHMODE eq "Max")
 	{
 		$Command = $Command." --max";
+	}
+	if ($VARIATION eq 'on') 
+	{
+		$Command = $Command." --var"; 
 	}
 	$Command = $Command." --skipcheck";
 	$Command = $Command." --bin ".$EXEC;
