@@ -338,11 +338,11 @@ elsif (defined $child) {
 		$Check_log = $DOWNLOAD_TEMP_RUN."/check_name.log";
 		if (lc($genome_info->{org_domain}) eq "eukaryota")
 		{
-			$Command = "$EXEC/tDRnamer/check_input_tdr_name --name ".$NameFile." --precursor > ".$Check_log;
+			$Command = "$EXEC/tDRnamer/check_input_tdr_name --name ".$NameFile." --min 13 --precursor > ".$Check_log;
 		}
 		else
 		{
-			$Command = "$EXEC/tDRnamer/check_input_tdr_name --name ".$NameFile." > ".$Check_log;
+			$Command = "$EXEC/tDRnamer/check_input_tdr_name --name ".$NameFile." --min 13 > ".$Check_log;
 		}
 		system($Command);
 	
@@ -384,11 +384,11 @@ elsif (defined $child) {
 			}
 			elsif ($i == 1 and $value > 0)
 			{
-				$ERROR = "<BR>".$value." query tDR names have invalid character(s). Please check the naming nomenclature on the Help page and make adjustment accordingly.<BR>";
+				$ERROR = "<BR>".$value." query tDR names have invalid character(s). Please check the naming nomenclature on the <a href=\"http://trna.ucsc.edu/tDRnamer/docs/\" target=_blank>User Guide</a> and make adjustment accordingly.<BR>";
 			}
 			elsif ($i == 2 and $value > 0)
 			{
-				$ERROR = "<BR>".$value." query tDR names have invalid format. Please check the naming nomenclature on the Help page and make adjustment accordingly.<BR>";
+				$ERROR = "<BR>".$value." query tDR names have invalid format. Please check the naming nomenclature on the <a href=\"http://trna.ucsc.edu/tDRnamer/docs/\" target=_blank>User Guide</a> and make adjustment accordingly.<BR>";
 			}
 		}
 		if ($ERROR)
